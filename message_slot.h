@@ -24,6 +24,24 @@
 #define CHANNEL_INDX ((file_data*)file->private_data)->channel_indx
 #define MINOR_INDX ((file_data*)file->private_data)->minor
 #define ENOMEM 12
+
+//================== USER LEVEL DEFINES ===========================
+
+#define SYSCALL_EXIT_FAILURE -1
+#define EXIT_SUCCESS 0
+#define EXIT_FAILURE 1
+#define PATH_LOC 1
+#define CHANNEL_ID_LOC 2
+#define MSG_LOC 3
+#define WRONG_ARG_NUM_ERR "Wrong argumet's number.\n"
+#define OPEN_ERR "Error on open.\n"
+#define IOCTL_ERR "Error on ioctl.\n"
+#define WR_ERR "Error on write.\n"
+#define RD_ERR "Error on read.\n"
+#define CLOSE_ERR "Error on close.\n"
+
+//================== END OF USER LEVEL DEFINES ====================
+
 #define ERROR_CHECK(condition, extra_code, errno_value){\
     if(condition){\
         extra_code\
