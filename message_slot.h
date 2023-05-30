@@ -22,7 +22,7 @@
 #define FAIL -1
 #define FREE_CHANNEL 0 // We use that number to indicate free channel and illigal channel numbers because it's an illigal channel number.
 #define ILLEGAL_INDX -1
-#define MSG_SLOT_CHANNEL _IO(MAJOR_NUM, 0, unsigned long)
+#define MSG_SLOT_CHANNEL _IO(MAJOR_NUM, 0)
 #define MIN_WRITE 1
 #define CHANNEL_INDX ((file_data*)file->private_data)->channel_indx
 #define MINOR_INDX ((file_data*)file->private_data)->minor
