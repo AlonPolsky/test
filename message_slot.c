@@ -47,22 +47,6 @@ static ssize_t device_read( struct file* file,
     
     return i;
 }
-//---------------------------------------------------------------
-// a process which has already opened
-// the device file attempts to read from it
-static ssize_t device_read( struct file* file,
-                            char __user* buffer,
-                            size_t       length,
-                            loff_t*      offset )
-{
-  // read doesnt really do anything (for now)
-  printk( "Invocing device_read(%p,%ld) - "
-          "operation not supported yet\n"
-          "(last written -)\n",
-          file, length);
-  //invalid argument error
-  return -EINVAL;
-}
 
 //---------------------------------------------------------------
 // a processs which has already opened
