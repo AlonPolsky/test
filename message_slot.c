@@ -70,8 +70,6 @@ static ssize_t device_write( struct file*       file,
   ERROR_CHECK(CHANNEL_INDX == ILLEGAL_INDX, , EINVAL)
   ERROR_CHECK(length > BUF_LEN || length < MIN_WRITE, , EMSGSIZE)
 
-  ERROR_CHECK(access_ok(VERIFY_READ, buffer, length) != 0,, EINVAL)
-
   for(i = 0; i < length; i++)
   {
     ERROR_CHECK(get_user(checker, buffer + i),,EINVAL)
