@@ -14,6 +14,8 @@ int main(int argc, char* argv[])
 {
     int fd;
 
+    printf("1\n");
+
     if(argc != ARGV_ARGUMENTS)
     {
         // I intentionally don't use perror()/strerror(), because it'll lead to an uninformative error message, due to the fact that at this point of run-time,
@@ -21,14 +23,24 @@ int main(int argc, char* argv[])
         fprintf(stderr, WRONG_ARG_NUM_ERR);
         exit(EXIT_FAILURE);
     }
+
+    printf("2\n");
     
     fd = open(argv[PATH_LOC], O_WRONLY);
 
+    printf("3\n");
+
     ERROR_CHECK_USERLEVEL(fd,OPEN_ERR)
+
+    printf("4\n");
 
     ERROR_CHECK_USERLEVEL(write(fd, argv[MSG_LOC], strlen(argv[MSG_LOC])), WR_ERR)
 
+    printf("5\n");
+
     ERROR_CHECK_USERLEVEL(close(fd), CLOSE_ERR)
+
+    printf("5\n");
 
     exit(EXIT_SUCCESS);
 }
