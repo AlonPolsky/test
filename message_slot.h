@@ -8,7 +8,6 @@
 #include <linux/uaccess.h>  /* for get_user and put_user */
 #include <linux/string.h>   /* for memset. NOTE - not string.h!*/
 #include <linux/slab.h>
-#include <error.h>
 
 
 #define MAJOR_NUM 235
@@ -27,6 +26,7 @@
 #define MIN_WRITE 1
 #define CHANNEL_INDX ((file_data*)file->private_data)->channel_indx
 #define MINOR_INDX ((file_data*)file->private_data)->minor
+#define EMVSDYNALC 151
 #define ERROR_CHECK(condition, extra_code, errno_value){\
     if(condition){\
         extra_code;\
