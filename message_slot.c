@@ -14,7 +14,7 @@ static int device_open( struct inode* inode,
                         struct file*  file )
 {
     // Here we fill file->private_data correctly.
-    ERROR_CHECK((file->private_data = (void*) kmalloc(sizeof(file_data), GFP_KERNEL)) == NULL,,EMVSDYNALC)
+    ERROR_CHECK((file->private_data = (void*) kmalloc(sizeof(file_data), GFP_KERNEL)) == NULL,,ENOMEM)
 
     MINOR_INDX = iminor(inode);
     CHANNEL_INDX = ILLEGAL_INDX;
@@ -141,7 +141,7 @@ static int __init simple_init(void)
 
   msg_slots = (Msg_Slot*) kmalloc(MAX_MINOR * sizeof(Msg_Slot), GFP_KERNEL);
 
-  ERROR_CHECK(msg_slots == NULL,,EMVSDYNALC);
+  ERROR_CHECK(msg_slots == NULL,,ENOMEM);
 
   rc = register_chrdev(MAJOR_NUM, DEVICE_NAME, &Fops);
 
