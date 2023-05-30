@@ -139,7 +139,7 @@ static int __init simple_init(void)
 {
     int rc;
 
-    ERROR_CHECK((rc = r_chrdev(MAJOR_NUM, DEVICE_NAME, &Fops)) < 0, printk(KERN_ERR "%s registraion failed for  %d\n", DEVICE_FILE_RANGE, MAJOR_NUM), rc)
+    ERROR_CHECK((rc = r_chrdev(MAJOR_NUM, DEVICE_NAME, &Fops)) < 0, printk(KERN_ERR "%s registraion failed for  %d\n", DEVICE_FILE_NAME, MAJOR_NUM), rc)
     
     return SUCCESS;
 }
