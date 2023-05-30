@@ -19,7 +19,6 @@
 int main(int argc, char* argv[])
 {
     int fd;
-    int channel;
 
     ERROR_CHECK_SENDER(argc != ARGV_ARGUMENTS, WRONG_ARG_AMOUNT_ERR)
     
