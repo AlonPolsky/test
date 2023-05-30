@@ -39,7 +39,8 @@
 // We add sizeof(int) chars in the beginning of every message so we'll be a able to infer the message length.
 typedef struct Channels{
     unsigned int channels_array[MAX_CHANNELS];
-    char msgs[MAX_CHANNELS][BUF_LEN + sizeof(size_t)];
+    size_t msg_length[MAX_CHANNELS];
+    char msgs[MAX_CHANNELS];
 }Channels;
 
 // This data structure stores the minor number of a struct file and the channel indx of the struct file in channels[minor]->channels_array.

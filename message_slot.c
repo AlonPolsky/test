@@ -7,7 +7,7 @@
 #include "message_slot.h"
 
 // The msg_slot with minor number i has its data stored in msg_slots[i].
-static Channels msg_slots[MAX_MSGSLOTS];
+static Msg_Slots msg_slots[MAX_MSGSLOTS];
 
 //================== DEVICE FUNCTIONS ===========================
 static int device_open( struct inode* inode,
@@ -34,16 +34,16 @@ static ssize_t device_read( struct file* file,
     char* checker;
 
     ERROR_CHECK(CHANNEL_INDX == ILLEGAL_INDX, , EINVAL)
-    ERROR_CHECK(((size_t*)(msg_slots[MINOR_INDX]->msgs[CHANNEL_INDX]))* == 0, , EWOULDBLOCK)
-    ERROR_CHECK(length <((size_t*)(msg_slots[MINOR_INDX]->msgs[CHANNEL_INDX]))*, , ENOSPC)
+    ERROR_CHECK(msg_slots[MINOR_INDX]->msg_length[CHANNEL_INDX] == 0, , EWOULDBLOCK)
+    ERROR_CHECK(length < msg_slots[MINOR_INDX]->msg_length[CHANNEL_INDX], , ENOSPC)
 
     for(i = 0; i < length; i++)
     {
         ERROR_CHECK(get_user(checker, buffer + i),,EINVAL)
     }
 
-    for(i = 0; i < ((size_t*)msg_slots[MINOR_INDX]->msgs[CHANNEL_INDX])*; i++)
-        ERROR_CHECK(put_user(msg_slots[MINOR_INDX]->msgs[CHANNEL_INDX][sizeof(size_t) + i], buffer + i),, EINVAL)
+    for(i = 0; i < msg_slots[MINOR_INDX]->msg_length[CHANNEL_INDX]; i++)
+        ERROR_CHECK(put_user(msg_slots[MINORO_INDX]->msgs[CHANNEL_INDX][i], buffer + i),, EINVAL)
     
     return i;
 }
