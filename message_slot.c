@@ -13,10 +13,13 @@ static Channels msg_slots[MAX_MSGSLOTS];
 static int device_open( struct inode* inode,
                         struct file*  file )
 {
-  printk("Invoking device_open(%p)\n", file);
+    // Here we fill file->private_data correctly.
+    ERROR_CHECK((file->private_data = (void*) kmalloc(sizeof(file_data), GFP_KERNEL)) == NULL,,EMVSDYNALC)
 
+    MINOR_INDX = iminor(inode);
+    CHANNEL_INDX = ILLEGAL_INDX;
 
-  return SUCCESS;
+    return SUCCESS;
 }
 
 //---------------------------------------------------------------
