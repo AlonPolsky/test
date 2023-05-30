@@ -42,8 +42,6 @@ static ssize_t device_read( struct file* file,
     int i;
     char checker;
 
-    printk("here");
-
     ERROR_CHECK(CHANNEL_INDX == ILLEGAL_INDX, , EINVAL)
     ERROR_CHECK(msg_slots[MINOR_INDX].msgs_length[CHANNEL_INDX] == 0, , EWOULDBLOCK)
     ERROR_CHECK(length < msg_slots[MINOR_INDX].msgs_length[CHANNEL_INDX], , ENOSPC)

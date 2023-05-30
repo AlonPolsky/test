@@ -23,7 +23,7 @@ int main(int argc, char* argv[])
         exit(EXIT_FAILURE);
     }
     
-    fd = open(argv[PATH_LOC], O_WRONLY);
+    fd = open(argv[PATH_LOC], O_RDONLY);
 
     ERROR_CHECK_USERLEVEL(fd, OPEN_ERR)
 
