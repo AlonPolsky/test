@@ -35,15 +35,15 @@
 }
 
 // A data structure that will provide abstraction of a massage slot, channel_array will store the channel numbers that are cureently used.
-// channel_array[i] != 0 iff channel_array[i] is the number of the channel that has its message stored at msgs[i],
-// in that case, megs_length[i] is msgs[i]'s length.
+// channels[i] != 0 iff channels[i] is the number of the channel that has its message stored at msgs[i],
+// in that case, msgs_length[i] is msgs[i]'s length.
 typedef struct Msg_Slot{
-    unsigned int channels_array[MAX_CHANNELS];
-    size_t megs_length[MAX_CHANNELS];
+    unsigned int channels[MAX_CHANNELS];
+    size_t msgs_length[MAX_CHANNELS];
     char msgs[MAX_CHANNELS][BUF_LEN];
 }Msg_Slot;
 
-// This data structure stores the minor number of a struct file and the channel indx of the struct file in channels[minor]->channels_array.
+// This data structure stores the minor number of a struct file and the channel indx of the struct file in msg_slot[MINOR_INDX].channels.
 typedef struct file_data{
     int minor;
     int channel_indx;

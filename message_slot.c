@@ -41,15 +41,15 @@ static ssize_t device_read( struct file* file,
     char checker;
 
     ERROR_CHECK(CHANNEL_INDX == ILLEGAL_INDX, , EINVAL)
-    ERROR_CHECK(msg_slots[MINOR_INDX].megs_length[CHANNEL_INDX] == 0, , EWOULDBLOCK)
-    ERROR_CHECK(length < msg_slots[MINOR_INDX].megs_length[CHANNEL_INDX], , ENOSPC)
+    ERROR_CHECK(msg_slots[MINOR_INDX].msgs_length[CHANNEL_INDX] == 0, , EWOULDBLOCK)
+    ERROR_CHECK(length < msg_slots[MINOR_INDX].msgs_length[CHANNEL_INDX], , ENOSPC)
 
     for(i = 0; i < length; i++)
     {
         ERROR_CHECK(get_user(checker, buffer + i),,EINVAL)
     }
 
-    for(i = 0; i < msg_slots[MINOR_INDX].megs_length[CHANNEL_INDX]; i++)
+    for(i = 0; i < msg_slots[MINOR_INDX].msgs_length[CHANNEL_INDX]; i++)
         ERROR_CHECK(put_user(msg_slots[MINOR_INDX].msgs[CHANNEL_INDX][i], buffer + i),, EINVAL)
     
     return i;
@@ -75,7 +75,7 @@ static ssize_t device_write( struct file*       file,
     ERROR_CHECK(get_user(checker, buffer + i),,EINVAL)
   }
 
-  msg_slots[MINOR_INDX].megs_length[CHANNEL_INDX] = length;
+  msg_slots[MINOR_INDX].msgs_length[CHANNEL_INDX] = length;
 
   for(i = 0; i < length; i++)
   {
@@ -86,17 +86,38 @@ static ssize_t device_write( struct file*       file,
 }
 
 //----------------------------------------------------------------
-static long device_ioctl( struct   file* file,
+static ssize_t device_ioctl( struct   file* file,
                           unsigned int   ioctl_command_id,
-                          unsigned long  ioctl_param )
+                          unsigned int ioctl_param )
 {
-  // Switch according to the ioctl called
-  if( MSG_SLOT_CHANNEL == ioctl_command_id ) {
-    // Get the parameter given to ioctl by the process
-    printk( "Invoking ioctl: setting encryption "
-            "flag to %ld\n", ioctl_param );
-  }
+  // Here we find the right channel id in msg_slots[MINOR_INDX].channels, then we update
+  // the data structures accordingly.
+  ssize_t i;
+  int min = ILLEGAL_INDX;
 
+  ERROR_CHECK(ioctl_command_id != MSG_SLOT_CHANNEL || !ioctl_param, ,EINVAL)
+
+
+  for (i = 0; i < MAX_MSGSLOTS; i++)
+  {
+    if (msg_slots[MINOR_INDX].channels[i] == ioctl_param)
+    {
+      break;
+    }
+    if((min == ILLEGAL_INDX) && (msg_slots[MINOR_INDX].channels[i] == FREE_CHANNEL))
+    {
+      min = i;
+    }
+  }
+  
+  if(i == MAX_MSGSLOTS)
+  {
+    CHANNEL_INDX = min;
+    msg_slots[MINOR_INDX].channels[min] = ioctl_param;
+  }
+  else
+    CHANNEL_INDX = i;
+    
   return SUCCESS;
 }
 
