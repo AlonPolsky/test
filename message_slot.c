@@ -88,7 +88,7 @@ static ssize_t device_write( struct file*       file,
 //----------------------------------------------------------------
 static long device_ioctl( struct   file* file,
                           unsigned int   ioctl_command_id,
-                          unsigned int ioctl_param )
+                          long unsigned int ioctl_param )
 {
   // Here we find the right channel id in msg_slots[MINOR_INDX].channels, then we update
   // the data structures accordingly.
