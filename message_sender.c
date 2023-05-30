@@ -2,6 +2,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/ioctl.h>
 #include "message_slot.h"
 
 #define ARGV_ARGUMENTS 3 + 1
