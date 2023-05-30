@@ -43,7 +43,7 @@ static ssize_t device_read( struct file* file,
     }
 
     for(i = 0; i < msg_slots[MINOR_INDX].msg_length[CHANNEL_INDX]; i++)
-        ERROR_CHECK(put_user(msg_slots[MINORO_INDX].msgs[CHANNEL_INDX][i], buffer + i),, EINVAL)
+        ERROR_CHECK(put_user(msg_slots[MINOR_INDX].msgs[CHANNEL_INDX][i], buffer + i),, EINVAL)
     
     return i;
 }
