@@ -137,20 +137,18 @@ struct file_operations Fops = {
 // Initialize the module - Register the character device
 static int __init simple_init(void)
 {
-    int rc;
+  int rc;
 
-    rc = register_chrdev(MAJOR_NUM, DEVICE_NAME, &Fops);
+  rc = register_chrdev(MAJOR_NUM, DEVICE_NAME, &Fops);
 
-    ERROR_CHECK(rc < 0, printk(KERN_ERR "%s registraion failed for  %d\n", DEVICE_FILE_NAME, MAJOR_NUM), rc)
+  ERROR_CHECK(rc < 0, printk(KERN_ERR "%s registraion failed for  %d\n", DEVICE_FILE_NAME, MAJOR_NUM), rc)
     
-    return SUCCESS;
+  return SUCCESS;
 }
 
 //---------------------------------------------------------------
 static void __exit simple_cleanup(void)
 {
-  // Unregister the device
-  // Should always succeed
   unregister_chrdev(MAJOR_NUM, DEVICE_NAME);
 }
 
