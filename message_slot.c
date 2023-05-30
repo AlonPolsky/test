@@ -23,11 +23,29 @@ static int device_open( struct inode* inode,
 }
 
 //---------------------------------------------------------------
-static int device_release( struct inode* inode,
-                           struct file*  file)
+static ssize_t device_read( struct file* file,
+                            char __user* buffer,
+                            size_t       length,
+                            loff_t*      offset )
 {
-    kfree(file->private_data);
-    return SUCCESS;
+    // First we check arguments, then we transfer the message into the buffer, while continuing the verification.
+
+    int i;
+    char* checker;
+
+    ERROR_CHECK(CHANNEL_INDX == ILLEGAL_INDX, , EINVAL)
+    ERROR_CHECK(((size_t*)(msg_slots[MINOR]->msgs[CHANNEL_INDX]))* == 0, , EWOULDBLOCK)
+    ERROR_CHECK(length <((size_t*)(msg_slots[MINOR]->msgs[CHANNEL_INDX]))*, , ENOSPC)
+
+    for(i = 0; i < length; i++)
+    {
+        ERROR_CHECK(get_user(checker, buffer + i),,EINVAL)
+    }
+
+    for(i = 0; i < ((size_t*)msg_slots[MINOR]->msgs[CHANNEL_INDX])*; i++)
+        ERROR_CHECK(put_user(msg_slots[MINOR]->msgs[CHANNEL_INDX][sizeof(size_t) + i], buffer + i),, EINVAL)
+    
+    return i;
 }
 //---------------------------------------------------------------
 // a process which has already opened

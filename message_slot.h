@@ -27,6 +27,9 @@
 #define CHANNEL_INDX ((file_data*)file->private_data)->channel_indx
 #define MINOR_INDX ((file_data*)file->private_data)->minor
 #define EMVSDYNALC 151
+#define EINVAL 121
+#define EWOULDBLOCK 1102
+#define ENOSPC 133
 #define ERROR_CHECK(condition, extra_code, errno_value){\
     if(condition){\
         extra_code;\
