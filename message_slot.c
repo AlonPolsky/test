@@ -39,6 +39,8 @@ static ssize_t device_read( struct file* file,
 {
     // First we check arguments, then we transfer the message into the buffer, while continuing the verification.
 
+    printk("here");
+
     int i;
     char checker;
 
