@@ -6,7 +6,8 @@
 
 #include "message_slot.h"
 
-
+// The msg_slot with minor number i has its data stored in msg_slots[i].
+static Channels msg_slots[MAX_MSGSLOTS];
 
 //================== DEVICE FUNCTIONS ===========================
 static int device_open( struct inode* inode,
