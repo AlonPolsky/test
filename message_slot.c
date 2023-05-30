@@ -26,11 +26,9 @@ static int device_open( struct inode* inode,
 static int device_release( struct inode* inode,
                            struct file*  file)
 {
-  printk("Invoking device_release(%p,%p)\n", inode, file);
-
-  return SUCCESS;
+    kfree(file->private_data);
+    return SUCCESS;
 }
-
 //---------------------------------------------------------------
 // a process which has already opened
 // the device file attempts to read from it
