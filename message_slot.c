@@ -5,6 +5,7 @@
 #define MODULE
 
 #include "message_slot.h"
+#include <linux/uaccess.h>
 
 // The msg_slot with minor number i has its data stored in msg_slots[i].
 static Msg_Slot* msg_slots;
