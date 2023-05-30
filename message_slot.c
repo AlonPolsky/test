@@ -48,7 +48,7 @@ static ssize_t device_read( struct file* file,
 
     for(i = 0; i < length; i++)
     {
-      printk("%d \n", i)
+      printk("%d \n", i);
       ERROR_CHECK(get_user(checker, buffer + i),,EINVAL)
     }
 
