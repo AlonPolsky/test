@@ -14,7 +14,7 @@ static int device_open( struct inode* inode,
                         struct file*  file )
 {
     // Here we fill file->private_data correctly.
-    ERROR_CHECK((file.private_data = (void*) kmalloc(sizeof(file_data), GFP_KERNEL)) == NULL,,EMVSDYNALC)
+    ERROR_CHECK((file->private_data = (void*) kmalloc(sizeof(file_data), GFP_KERNEL)) == NULL,,EMVSDYNALC)
 
     MINOR_INDX = iminor(inode);
     CHANNEL_INDX = ILLEGAL_INDX;
@@ -26,7 +26,7 @@ static int device_open( struct inode* inode,
 static int device_release( struct inode* inode,
                            struct file*  file)
 {
-    kfree(file.private_data);
+    kfree(file->private_data);
     return SUCCESS;
 }
 //---------------------------------------------------------------
