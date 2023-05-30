@@ -7,7 +7,7 @@
 #include "message_slot.h"
 
 // The msg_slot with minor number i has its data stored in msg_slots[i].
-static Msg_Slot msg_slots[MAX_MSGSLOTS];
+static Msg_Slot msg_slots[MAX_MINOR];
 
 //================== DEVICE FUNCTIONS ===========================
 static int device_open( struct inode* inode,
@@ -98,7 +98,7 @@ static long device_ioctl( struct   file* file,
   ERROR_CHECK(ioctl_command_id != MSG_SLOT_CHANNEL || !ioctl_param, ,EINVAL)
 
 
-  for (i = 0; i < MAX_MSGSLOTS; i++)
+  for (i = 0; i < MAX_MINOR; i++)
   {
     if (msg_slots[MINOR_INDX].channels[i] == ioctl_param)
     {
@@ -110,7 +110,7 @@ static long device_ioctl( struct   file* file,
     }
   }
   
-  if(i == MAX_MSGSLOTS)
+  if(i == MAX_MINOR)
   {
     CHANNEL_INDX = min;
     msg_slots[MINOR_INDX].channels[min] = ioctl_param;

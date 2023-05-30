@@ -14,7 +14,7 @@
 
 #define DEVICE_NAME "msg_slot"
 #define BUF_LEN 128
-#define MAX_MSGSLOTS 256
+#define MAX_MINOR 257
 // It may be needed to have more than one File name.
 #define DEVICE_FILE_NAME "msg_slot_"
 #define MAX_CHANNELS 1 < 20
