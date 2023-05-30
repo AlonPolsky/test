@@ -61,7 +61,6 @@ static ssize_t device_write( struct file*       file,
   ssize_t i;
   printk("Invoking device_write(%p,%ld)\n", file, length);
   for( i = 0; i < length && i < BUF_LEN; ++i ) {
-    if( 1 == encryption_flag )
   }
  
   // return the number of input characters used
