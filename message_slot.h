@@ -19,7 +19,6 @@
 #define DEVICE_FILE_NAME "msg_slot_"
 #define MAX_CHANNELS 1 < 20
 #define SUCCESS 0
-#define FAIL -1
 #define FREE_CHANNEL 0 // We use that number to indicate free channel and illigal channel numbers because it's an illigal channel number.
 #define ILLEGAL_INDX -1
 #define MSG_SLOT_CHANNEL _IO(MAJOR_NUM, 0)
