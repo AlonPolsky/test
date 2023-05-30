@@ -27,7 +27,7 @@ int main(int argc, char* argv[])
 
     ERROR_CHECK_USERLEVEL(close(fd) == SYSCALL_EXIT_FAILURE, CLOSE_ERR)
 
-    ERROR_CHECK_USERLEVEL(write(stdout, buf, len) == SYSCALL_EXIT_FAILURE, WR_ERR)
+    ERROR_CHECK_USERLEVEL(write(STDOUT_FD, buf, len) == SYSCALL_EXIT_FAILURE, WR_ERR)
 
 
     exit(EXIT_SUCCESS);

@@ -33,6 +33,7 @@
 #define PATH_LOC 1
 #define CHANNEL_ID_LOC 2
 #define MSG_LOC 3
+#define STDOUT_FD 1
 #define WRONG_ARG_NUM_ERR "Wrong argumet's number.\n"
 #define OPEN_ERR "Error on open.\n"
 #define IOCTL_ERR "Error on ioctl.\n"
