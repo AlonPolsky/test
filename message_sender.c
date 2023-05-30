@@ -13,7 +13,7 @@
 #define EXIT_FAILURE 1
 #define PATH_LOC 1
 #define CHANNEL_ID_LOC 2
-#define MSG_LOC
+#define MSG_LOC 3
 #define ERROR_CHECK_SENDER(condition, message) ERROR_CHECK(condition, perror(message); exit(EXIT_FAILURE);, EXIT_FAILURE)
 
 int main(int argc, char* argv[])
