@@ -10,14 +10,10 @@
 //Our custom definitions of IOCTL operations
 #include "message_slot.h"
 
-struct chardev_info {
-  spinlock_t lock;
-};
 
 // used to prevent concurent access into the same device
 static int dev_open_flag = 0;
 
-static struct chardev_info device_info;
 
 // The message the device will give when asked
 static char the_message[BUF_LEN];
@@ -33,14 +29,11 @@ static int device_open( struct inode* inode,
   printk("Invoking device_open(%p)\n", file);
 
   // We don't want to talk to two processes at the same time
-  spin_lock_irqsave(&device_info.lock, flags);
   if( 1 == dev_open_flag ) {
-    spin_unlock_irqrestore(&device_info.lock, flags);
     return -EBUSY;
   }
 
   ++dev_open_flag;
-  spin_unlock_irqrestore(&device_info.lock, flags);
   return SUCCESS;
 }
 
@@ -48,13 +41,10 @@ static int device_open( struct inode* inode,
 static int device_release( struct inode* inode,
                            struct file*  file)
 {
-  unsigned long flags; // for spinlock
   printk("Invoking device_release(%p,%p)\n", inode, file);
 
   // ready for our next caller
-  spin_lock_irqsave(&device_info.lock, flags);
   --dev_open_flag;
-  spin_unlock_irqrestore(&device_info.lock, flags);
   return SUCCESS;
 }
 
@@ -130,8 +120,6 @@ static int __init simple_init(void)
 {
   int rc = -1;
   // init dev struct
-  memset( &device_info, 0, sizeof(struct chardev_info) );
-  spin_lock_init( &device_info.lock );
 
   // Register driver capabilities. Obtain major num
   rc = register_chrdev( MAJOR_NUM, DEVICE_NAME, &Fops );
