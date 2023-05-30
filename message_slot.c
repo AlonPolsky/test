@@ -81,7 +81,7 @@ static ssize_t device_write( struct file*       file,
 
   for(i = 0; i < length; i++)
   {
-    ERROR_CHECK(get_user(msg_slots[MINOR]->msgs[CHANNEL_INDX][i], buffer + i),,EINVAL)
+    ERROR_CHECK(get_user(msg_slots[MINOR_INDX]->msgs[CHANNEL_INDX][i], buffer + i),,EINVAL)
   }
 
   return i;
