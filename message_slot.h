@@ -37,7 +37,7 @@
 // A data structure that every device file will contain, channel_array will store the channel numbers that are cureently used.
 // If the channel_array[i] != 0, then channel_array[i] is the number of the channel that has its message stored at msgs[sizeof(int) i].
 // We add sizeof(int) chars in the beginning of every message so we'll be a able to infer the message length.
-typedef struct Channels{
+typedef struct Msg_Slots{
     unsigned int channels_array[MAX_CHANNELS];
     size_t msg_length[MAX_CHANNELS];
     char msgs[MAX_CHANNELS];
