@@ -41,34 +41,49 @@ static ssize_t device_read( struct file* file,
     char checker;
 
     ERROR_CHECK(CHANNEL_INDX == ILLEGAL_INDX, , EINVAL)
-    ERROR_CHECK(msg_slots[MINOR_INDX].msg_length[CHANNEL_INDX] == 0, , EWOULDBLOCK)
-    ERROR_CHECK(length < msg_slots[MINOR_INDX].msg_length[CHANNEL_INDX], , ENOSPC)
+    ERROR_CHECK(msg_slots[MINOR_INDX].megs_length[CHANNEL_INDX] == 0, , EWOULDBLOCK)
+    ERROR_CHECK(length < msg_slots[MINOR_INDX].megs_length[CHANNEL_INDX], , ENOSPC)
 
     for(i = 0; i < length; i++)
     {
         ERROR_CHECK(get_user(checker, buffer + i),,EINVAL)
     }
 
-    for(i = 0; i < msg_slots[MINOR_INDX].msg_length[CHANNEL_INDX]; i++)
+    for(i = 0; i < msg_slots[MINOR_INDX].megs_length[CHANNEL_INDX]; i++)
         ERROR_CHECK(put_user(msg_slots[MINOR_INDX].msgs[CHANNEL_INDX][i], buffer + i),, EINVAL)
     
     return i;
 }
 
 //---------------------------------------------------------------
-// a processs which has already opened
-// the device file attempts to write to it
+
 static ssize_t device_write( struct file*       file,
                              const char __user* buffer,
                              size_t             length,
                              loff_t*            offset)
 {
-  ssize_t i;
-  printk("Invoking device_write(%p,%ld)\n", file, length);
-  for( i = 0; i < length && i < BUF_LEN; ++i ) {
+  // First we check arguments, then we transfer the message from the buffer, while continuing the verification.
+
+  size_t i;
+  char checker;
+
+  ERROR_CHECK(CHANNEL_INDX == ILLEGAL_INDX, , EINVAL)
+  ERROR_CHECK(length > BUF_LEN || length < MIN_WRITE, , EMSGSIZE)
+
+  ERROR_CHECK(access_ok(VERIFY_READ, buffer, length) != 0,, EINVAL)
+
+  for(i = 0; i < length; i++)
+  {
+    ERROR_CHECK(get_user(checker, buffer + i),,EINVAL)
   }
- 
-  // return the number of input characters used
+
+  msg_slots[MINOR_INDX].megs_length[CHANNEL_INDX] = length;
+
+  for(i = 0; i < length; i++)
+  {
+    ERROR_CHECK(get_user(msg_slots[MINOR]->msgs[CHANNEL_INDX][i], buffer + i),,EINVAL)
+  }
+
   return i;
 }
 
