@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
     printf("4\n");
 
 
-    printf("%zd\n", write(fd, argv[MSG_LOC], strlen(argv[MSG_LOC]));
+    printf("%zd\n", write(fd, argv[MSG_LOC], strlen(argv[MSG_LOC])));
 
     ERROR_CHECK_USERLEVEL(close(fd), CLOSE_ERR)
 
