@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 
     ERROR_CHECK_USERLEVEL(ioctl(fd, MSG_SLOT_CHANNEL, atol(argv[CHANNEL_ID_LOC])), IOCTL_ERR)
 
-    ERROR_CHECK_USERLEVEL(len = read(fd, buf, BUF_LEN), RD_ERR)
+    ERROR_CHECK_USERLEVEL((len = read(fd, buf, BUF_LEN)), RD_ERR)
 
     ERROR_CHECK_USERLEVEL(close(fd), CLOSE_ERR)
 
