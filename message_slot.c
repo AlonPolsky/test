@@ -31,7 +31,7 @@ static ssize_t device_read( struct file* file,
     // First we check arguments, then we transfer the message into the buffer, while continuing the verification.
 
     int i;
-    char* checker;
+    char checker;
 
     ERROR_CHECK(CHANNEL_INDX == ILLEGAL_INDX, , EINVAL)
     ERROR_CHECK(msg_slots[MINOR_INDX].msg_length[CHANNEL_INDX] == 0, , EWOULDBLOCK)
