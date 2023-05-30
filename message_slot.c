@@ -7,8 +7,6 @@
 #undef MODULE
 #define MODULE
 
-MODULE_LICENSE("GPL");
-
 //Our custom definitions of IOCTL operations
 #include "message_slot.h"
 
