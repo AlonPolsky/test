@@ -161,7 +161,7 @@ static void __exit simple_cleanup(void)
 {
   // Unregister the device
   // Should always succeed
-  unregister_chrdev(MAJOR_NUM, DEVICE_NAME_NAME);
+  unregister_chrdev(MAJOR_NUM, DEVICE_NAME);
 }
 
 //---------------------------------------------------------------

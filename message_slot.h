@@ -33,8 +33,6 @@
     }\
 }
 
-// Set the message of the device driver
-#define IOCTL_SET_ENC _IOW(MAJOR_NUM, 0, unsigned long)
 
 #define DEVICE_RANGE_NAME "char_dev"
 
