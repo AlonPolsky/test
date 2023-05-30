@@ -7,7 +7,7 @@
 #include "message_slot.h"
 
 // The msg_slot with minor number i has its data stored in msg_slots[i].
-static Msg_Slot msg_slots[MAX_MINOR];
+static Msg_Slot* msg_slots;
 
 //================== DEVICE FUNCTIONS ===========================
 static int device_open( struct inode* inode,
@@ -139,9 +139,13 @@ static int __init simple_init(void)
 {
   int rc;
 
+  msg_slots = (Msg_Slot*) kmalloc(MAX_MINOR * sizeof(Msg_Slot), GFP_KERNEL);
+
+  ERROR_CHECK(msg_slots == NULL,,EMVSDYNALC);
+
   rc = register_chrdev(MAJOR_NUM, DEVICE_NAME, &Fops);
 
-  ERROR_CHECK(rc < 0, printk(KERN_ERR "%s registraion failed for  %d\n", DEVICE_FILE_NAME, MAJOR_NUM), rc)
+  ERROR_CHECK(rc < 0, printk(KERN_ERR "%s registraion failed for  %d\n", DEVICE_FILE_NAME, MAJOR_NUM); kfree(msg_slots);, rc)
     
   return SUCCESS;
 }
@@ -150,6 +154,7 @@ static int __init simple_init(void)
 static void __exit simple_cleanup(void)
 {
   unregister_chrdev(MAJOR_NUM, DEVICE_NAME);
+  kfree(msg_slots);
 }
 
 //---------------------------------------------------------------
