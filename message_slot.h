@@ -46,7 +46,7 @@
 #define ERROR_CHECK(condition, extra_code, errno_value){\
     if(condition){\
         extra_code\
-        return errno_value;\
+        return -errno_value;\
     }\
 }
 
