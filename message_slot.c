@@ -7,14 +7,6 @@
 #undef MODULE
 #define MODULE
 
-#include <linux/ioctl.h>
-#include <linux/kernel.h>   /* We're doing kernel work */
-#include <linux/module.h>   /* Specifically, a module */
-#include <linux/fs.h>       /* for register_chrdev */
-#include <linux/uaccess.h>  /* for get_user and put_user */
-#include <linux/string.h>   /* for memset. NOTE - not string.h!*/
-#include <linux/slab.h>
-
 MODULE_LICENSE("GPL");
 
 //Our custom definitions of IOCTL operations
@@ -144,7 +136,7 @@ static int __init simple_init(void)
   spin_lock_init( &device_info.lock );
 
   // Register driver capabilities. Obtain major num
-  rc = register_chrdev( MAJOR_NUM, DEVICE_RANGE_NAME, &Fops );
+  rc = register_chrdev( MAJOR_NUM, DEVICE_NAME, &Fops );
 
   // Negative values signify an error
   if( rc < 0 ) {
@@ -169,7 +161,7 @@ static void __exit simple_cleanup(void)
 {
   // Unregister the device
   // Should always succeed
-  unregister_chrdev(MAJOR_NUM, DEVICE_RANGE_NAME);
+  unregister_chrdev(MAJOR_NUM, DEVICE_NAME_NAME);
 }
 
 //---------------------------------------------------------------
