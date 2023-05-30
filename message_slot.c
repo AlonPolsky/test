@@ -48,7 +48,6 @@ static ssize_t device_read( struct file* file,
 
     for(i = 0; i < length; i++)
     {
-      //printk("%d \n", i);
       ERROR_CHECK(get_user(checker, buffer + i),,EINVAL)
     }
 
@@ -70,7 +69,7 @@ static ssize_t device_write( struct file*       file,
   size_t i;
   char checker;
 
-  ERROR_CHECK(CHANNEL_INDX == ILLEGAL_INDX, , EINVAL)
+  ERROR_CHECK(CHANNEL_INDX == ILLEGAL_INDX, , -EINVAL)
   ERROR_CHECK(length > BUF_LEN || length < MIN_WRITE, , EMSGSIZE)
 
   for(i = 0; i < length; i++)
