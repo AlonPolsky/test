@@ -25,7 +25,7 @@
 #define MSG_SLOT_CHANNEL _IO(MAJOR_NUM, 0, unsigned long)
 #define MIN_WRITE 1
 #define CHANNEL_INDX ((file_data*)file->private_data)->channel_indx
-#define MINOR ((file_data*)file->private_data)->minor
+#define MINOR_INDX ((file_data*)file->private_data)->minor
 #define ERROR_CHECK(condition, extra_code, errno_value){\
     if(condition){\
         extra_code;\
