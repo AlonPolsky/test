@@ -9,8 +9,7 @@
 
 
 
-// The message the device will give when asked
-static char the_message[BUF_LEN];
+
 
 //Do we need to encrypt?
 static int encryption_flag = 0;
@@ -19,7 +18,6 @@ static int encryption_flag = 0;
 static int device_open( struct inode* inode,
                         struct file*  file )
 {
-  unsigned long flags; // for spinlock
   printk("Invoking device_open(%p)\n", file);
 
 
@@ -46,8 +44,8 @@ static ssize_t device_read( struct file* file,
   // read doesnt really do anything (for now)
   printk( "Invocing device_read(%p,%ld) - "
           "operation not supported yet\n"
-          "(last written - %s)\n",
-          file, length, the_message );
+          "(last written -)\n",
+          file, length);
   //invalid argument error
   return -EINVAL;
 }
@@ -63,9 +61,7 @@ static ssize_t device_write( struct file*       file,
   ssize_t i;
   printk("Invoking device_write(%p,%ld)\n", file, length);
   for( i = 0; i < length && i < BUF_LEN; ++i ) {
-    get_user(the_message[i], &buffer[i]);
     if( 1 == encryption_flag )
-      the_message[i] += 1;
   }
  
   // return the number of input characters used
