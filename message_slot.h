@@ -40,7 +40,7 @@
 typedef struct Msg_Slot{
     unsigned int channels_array[MAX_CHANNELS];
     size_t msg_length[MAX_CHANNELS];
-    char msgs[MAX_CHANNELS];
+    char msgs[MAX_CHANNELS][BUF_LEN];
 }Msg_Slot;
 
 // This data structure stores the minor number of a struct file and the channel indx of the struct file in channels[minor]->channels_array.
