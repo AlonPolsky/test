@@ -22,6 +22,8 @@ int main(int argc, char* argv[])
 
     RROR_CHECK_USERLEVEL(ioctl(fd, MSG_SLOT_CHANNEL, atol(argv[CHANNEL_ID_LOC])) == SYSCALL_EXIT_FAILURE, IOCTL_ERR)
 
+    printf("%d", write(fd, argv[MSG_LOC], strlen(argv[MSG_LOC])));
+
     RROR_CHECK_USERLEVEL(write(fd, argv[MSG_LOC], strlen(argv[MSG_LOC])) == SYSCALL_EXIT_FAILURE, WR_ERR)
 
     RROR_CHECK_USERLEVEL(close(fd) == SYSCALL_EXIT_FAILURE, CLOSE_ERR)
