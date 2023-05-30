@@ -34,12 +34,12 @@
 #define CHANNEL_ID_LOC 2
 #define MSG_LOC 3
 #define STDOUT_FD 1
-#define WRONG_ARG_NUM_ERR "Wrong argumet's number.\n"
-#define OPEN_ERR "Error on open.\n"
-#define IOCTL_ERR "Error on ioctl.\n"
-#define WR_ERR "Error on write.\n"
-#define RD_ERR "Error on read.\n"
-#define CLOSE_ERR "Error on close.\n"
+#define WRONG_ARG_NUM_ERR "Wrong argumet's number"
+#define OPEN_ERR "Error on open"
+#define IOCTL_ERR "Error on ioctl"
+#define WR_ERR "Error on write"
+#define RD_ERR "Error on read"
+#define CLOSE_ERR "Error on close"
 
 //================== END OF USER LEVEL DEFINES ====================
 
