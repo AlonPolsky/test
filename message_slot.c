@@ -8,12 +8,6 @@
 
 
 
-
-
-
-//Do we need to encrypt?
-static int encryption_flag = 0;
-
 //================== DEVICE FUNCTIONS ===========================
 static int device_open( struct inode* inode,
                         struct file*  file )
@@ -77,7 +71,6 @@ static long device_ioctl( struct   file* file,
     // Get the parameter given to ioctl by the process
     printk( "Invoking ioctl: setting encryption "
             "flag to %ld\n", ioctl_param );
-    encryption_flag = ioctl_param;
   }
 
   return SUCCESS;
