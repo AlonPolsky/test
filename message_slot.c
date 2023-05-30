@@ -1,18 +1,12 @@
-// Declare what kind of code we want
-// from the header files. Defining __KERNEL__
-// and MODULE allows us to access kernel-level
-// code not usually available to userspace programs.
+
 #undef __KERNEL__
 #define __KERNEL__
 #undef MODULE
 #define MODULE
 
-//Our custom definitions of IOCTL operations
 #include "message_slot.h"
 
 
-// used to prevent concurent access into the same device
-static int dev_open_flag = 0;
 
 
 // The message the device will give when asked
@@ -28,12 +22,7 @@ static int device_open( struct inode* inode,
   unsigned long flags; // for spinlock
   printk("Invoking device_open(%p)\n", file);
 
-  // We don't want to talk to two processes at the same time
-  if( 1 == dev_open_flag ) {
-    return -EBUSY;
-  }
 
-  ++dev_open_flag;
   return SUCCESS;
 }
 
@@ -43,8 +32,6 @@ static int device_release( struct inode* inode,
 {
   printk("Invoking device_release(%p,%p)\n", inode, file);
 
-  // ready for our next caller
-  --dev_open_flag;
   return SUCCESS;
 }
 
