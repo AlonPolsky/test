@@ -18,11 +18,8 @@
 #define MAX_CHANNELS 1 < 20
 #define SUCCESS 0
 #define FREE_CHANNEL 0 // We use that number to indicate free channel and illigal channel numbers because it's an illigal channel number.
-#define ILLEGAL_INDX -1
 #define MSG_SLOT_CHANNEL _IO(MAJOR_NUM, 0)
 #define MIN_WRITE 1
-#define CHANNEL_INDX ((file_data*)file->private_data)->channel_indx
-#define MINOR_INDX ((file_data*)file->private_data)->minor
 #define ENOMEM 12
 
 //================== USER LEVEL DEFINES ===========================
@@ -50,19 +47,26 @@
     }\
 }
 
-// A data structure that will provide abstraction of a massage slot, channel_array will store the channel numbers that are cureently used.
-// channels[i] != 0 iff channels[i] is the number of the channel that has its message stored at msgs[i],
-// in that case, msgs_length[i] is msgs[i]'s length.
-typedef struct Msg_Slot{
-    unsigned int channels[MAX_CHANNELS];
-    size_t msgs_length[MAX_CHANNELS];
-    char msgs[MAX_CHANNELS][BUF_LEN];
-}Msg_Slot;
+// A node of a linked-list that will provide abstraction of a channel, used in Msg_Slots.
+typedef struct channel
+{
+    unsigned int minor;
+    unsigned long num;
+    char message[BUF_LEN];
+    int len;
+    struct channel* next;
+}channel;
 
-// This data structure stores the minor number of a struct file and the channel indx of the struct file in msg_slot[MINOR_INDX].channels.
+// A linked-list that will provide abstraction of the massage slots.
+typedef struct Msg_Slots{
+    struct channel* head;
+}Msg_Slots;
+
+// This data structure stores the minor number of a struct file and the channel number it is currently set on.
 typedef struct file_data{
-    int minor;
-    int channel_indx;
+    unsigned int minor;
+    long unsigned int channel_num;
+    struct channel* prev_channel;
 }file_data;
 
 #endif
