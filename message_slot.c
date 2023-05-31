@@ -103,13 +103,13 @@ static long device_ioctl( struct   file* file,
   ERROR_CHECK(ioctl_command_id != MSG_SLOT_CHANNEL || !ioctl_param, ,EINVAL)
 
 
-  for (i = 0; i < MAX_MINOR) && (msg_slots[MINOR_INDX].channels[i] != ioctl_param; i++)
+  for (i = 0; (i < MAX_MINOR) && (msg_slots[MINOR_INDX].channels[i] != ioctl_param; i++)
   {
     if((min == ILLEGAL_INDX) && (msg_slots[MINOR_INDX].channels[i] == FREE_CHANNEL))
     {
       min = i;
     }
-    printk("idk: %d", i);
+    printk("i: %d", i);
   }
 
   
