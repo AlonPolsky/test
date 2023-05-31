@@ -38,7 +38,7 @@ channel* find_channel(file_data* context, int write){
   channel* chan = NULL;
   if(context->prev_channel != NULL)
   {
-    printk(%d,41);
+    printk("here");
     return context->prev_channel;
   }
   
