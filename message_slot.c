@@ -13,6 +13,10 @@
 MODULE_LICENSE("GPL");
 
 // The msg_slot with minor number i has its data stored in msg_slots[i].
+// I know this is naive data management, at first I wanted to allocate all memory statically and make a it more space-local (the memory needed is bounded from above by 
+// a constant so we are able to.)
+// However, dumb me forgot that 1 < 20 is not the same as 1 << 20 (the number of channels per slot), 
+// and had a magic bug that he could not explain till he finished rewriting his data management
 static Msg_Slots* msg_slots;
 
 
