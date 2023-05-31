@@ -136,7 +136,7 @@ static ssize_t device_write( struct file*       file,
 
   int i;
   char checker;
-  channel* channel;
+  channel* chan;
   file_data* context = (file_data*) (file->private_data);
 
   // Checking whether there's no channel set on opened file
@@ -151,15 +151,15 @@ static ssize_t device_write( struct file*       file,
     ERROR_CHECK(get_user(checker, buffer + i),,EINVAL)
   }
 
-  channel = find_channel(context, 1);
+  chan = find_channel(context, 1);
 
-  ERROR_CHECK(channel ==  NULL, ,ENOMEM)
-  channel->len = length;
+  ERROR_CHECK(chan ==  NULL, ,ENOMEM)
+  chan->len = length;
 
   for(i = 0; i < length; i++)
   {
     // No direct access to user-space addresses in the kernel-level.
-    ERROR_CHECK(get_user((channel->message)[i], buffer + i),,EINVAL)
+    ERROR_CHECK(get_user((chan->message)[i], buffer + i),,EINVAL)
   }
 
   printk("%lu", chan->num);
