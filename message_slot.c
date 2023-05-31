@@ -147,7 +147,7 @@ static int __init simple_init(void)
 
   for (i = 0; i < MAX_MINOR; i++)
   {
-    msg_slots[i] = kmalloc(sizeof(Msg_Slot));
+    msg_slots[i] = kmalloc(sizeof(Msg_Slot), GFP_KERNEL);
     ERROR_CHECK(msg_slots[i] == NULL, ,ENOMEM);
   }
   
