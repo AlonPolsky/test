@@ -118,7 +118,7 @@ static ssize_t device_read( struct file* file,
     ERROR_CHECK(put_user((chan->message)[i], buffer + i),, EINVAL)
   }
 
-  printk("%d", chan->num);
+  printk("%lu", chan->num);
     
   return i;
 }
