@@ -31,6 +31,7 @@ channel* channel_init(file_data* context)
     return NULL;
   chan->minor = context->minor;
   chan->num = context->channel_num;
+  chan->next = NULL;
   return chan;
 }
 
@@ -82,6 +83,7 @@ static int device_open(struct inode* inode,
 
   ((file_data*)(file->private_data))->minor = iminor(inode);
   ((file_data*)(file->private_data))->channel_num = FREE_CHANNEL;
+  ((file_data*)(file->private_data))->prev_chanel = NULL;
 
   return SUCCESS;
 }
@@ -207,6 +209,8 @@ static int __init simple_init(void)
 
   // Checks for allocation fail.
   ERROR_CHECK(msg_slots == NULL,,ENOMEM);
+
+  msg_slots->head = NULL;
 
   rc = register_chrdev(MAJOR_NUM, DEVICE_NAME, &Fops);
 
