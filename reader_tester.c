@@ -28,15 +28,13 @@ int main(int argc, char* argv[])
 
     ERROR_CHECK_USERLEVEL(fd, 0, 0, OPEN_ERR)
 
-    ERROR_CHECK_USERLEVEL(ioctl(fd, MSG_SLOT_CHANNEL, a, 1, fd, IOCTL_ERR)
+    ERROR_CHECK_USERLEVEL(ioctl(fd, MSG_SLOT_CHANNEL, a), 1, fd, IOCTL_ERR)
 
     ERROR_CHECK_USERLEVEL((len = read(fd, buf, BUF_LEN)), 1, fd, RD_ERR)
 
     ERROR_CHECK_USERLEVEL(close(fd), 0, 0, CLOSE_ERR)
 
     ERROR_CHECK_USERLEVEL(write(STDOUT_FD, buf, len), 0, 0, WR_ERR)
-
-    ERROR_CHECK_USERLEVEL((len = read(fd, buf, BUF_LEN)), 1, fd, RD_ERR)
 
     exit(EXIT_SUCCESS);
 }
