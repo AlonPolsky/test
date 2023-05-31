@@ -53,12 +53,12 @@ channel* find_channel(file_data* context, int write){
   }
   
   chan = msg_slots->head;
-  while ((chan->next != NULL) && ((chan->minor != context->minor)  || (chan->minor != context->minor)))
+  while ((chan->next != NULL) && ((chan->minor != context->minor)  || (chan->num != context->channel_num)))
   {
     printk("third");
     chan = chan->next;
   }
-  if(!((chan->minor != context->minor)  || (chan->minor != context->minor)))
+  if(!((chan->minor != context->minor)  || (chan->num != context->num)))
   {
     printk("fourth");
     return chan;
