@@ -48,19 +48,19 @@ channel* find_channel(file_data* context, int write){
     if(write){
       msg_slots->head = channel_init(context);
     }
-    printk("first");
+    printk("second");
     return msg_slots->head;
   }
   
   chan = msg_slots->head;
   while ((chan->next != NULL) && ((chan->minor != context->minor)  || (chan->minor != context->minor)))
   {
-    printk("second");
+    printk("third");
     chan = chan->next;
   }
   if(!((chan->minor != context->minor)  || (chan->minor != context->minor)))
   {
-    printk("third");
+    printk("fourth");
     return chan;
   }
   
@@ -68,7 +68,7 @@ channel* find_channel(file_data* context, int write){
   {
     chan->next = channel_init(context);
   }
-  printk("fournth");
+  printk("fifth");
   return chan->next;
 }
 
