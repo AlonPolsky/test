@@ -83,7 +83,7 @@ static int device_open(struct inode* inode,
 
   ((file_data*)(file->private_data))->minor = iminor(inode);
   ((file_data*)(file->private_data))->channel_num = FREE_CHANNEL;
-  ((file_data*)(file->private_data))->prev_chanel = NULL;
+  ((file_data*)(file->private_data))->prev_channel = NULL;
 
   return SUCCESS;
 }
@@ -124,6 +124,8 @@ static ssize_t device_read( struct file* file,
     // No direct access to user-space addresses in the kernel-level.
     ERROR_CHECK(put_user((chan->msg)[i], buffer + i),, EINVAL)
   }
+
+  context->prev_channel = chan;
     
   return i;
 }
@@ -166,6 +168,8 @@ static ssize_t device_write( struct file*       file,
     // No direct access to user-space addresses in the kernel-level.
     ERROR_CHECK(get_user((chan->msg)[i], buffer + i),,EINVAL)
   }
+
+  context->prev_channel = chan;
 
   return i;
 }
