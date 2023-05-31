@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 
     ERROR_CHECK_USERLEVEL(ioctl(fd, MSG_SLOT_CHANNEL, 2), 1, fd, IOCTL_ERR)
 
-    printf("\n")
+    printf("\n");
 
     ERROR_CHECK_USERLEVEL((len = read(fd, buf, BUF_LEN)), 1, fd, RD_ERR)
 
