@@ -14,7 +14,6 @@ int main(int argc, char* argv[])
     int fd;
     char buf[BUF_LEN];
     size_t len;
-    unsigned int a = 7l;
 
     if(argc != ARGV_ARGUMENTS)
     {
@@ -28,7 +27,7 @@ int main(int argc, char* argv[])
 
     ERROR_CHECK_USERLEVEL(fd, 0, 0, OPEN_ERR)
 
-    ERROR_CHECK_USERLEVEL(ioctl(fd, MSG_SLOT_CHANNEL, a), 1, fd, IOCTL_ERR)
+    ERROR_CHECK_USERLEVEL(ioctl(fd, MSG_SLOT_CHANNEL, argv[CHANNEL_ID_LOC]), 1, fd, IOCTL_ERR)
 
     ERROR_CHECK_USERLEVEL((len = read(fd, buf, 4)), 1, fd, RD_ERR)
 
