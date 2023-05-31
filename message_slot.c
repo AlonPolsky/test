@@ -99,6 +99,7 @@ static ssize_t device_read( struct file* file,
 
   int i;
   char checker;
+  channel* channel;
   file_data* context = (file_data*) (file->private_data);
 
   // Checking whether there's no channel set on opened file
