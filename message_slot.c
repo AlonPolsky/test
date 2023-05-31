@@ -139,12 +139,13 @@ struct file_operations Fops = {
 // Initialize the module - Register the character device
 static int __init simple_init(void)
 {
+  int i = 0;
   int rc;
 
   msg_slots =  kmalloc(MAX_MINOR * sizeof(Msg_Slot*), GFP_KERNEL);
   ERROR_CHECK(msg_slots == NULL, ,ENOMEM);
 
-  for (size_t i = 0; i < MAX_MINOR; i++)
+  for (i = 0; i < MAX_MINOR; i++)
   {
     msg_slots[i] = kmalloc(sizeof(Msg_Slot));
     ERROR_CHECK(msg_slots[i] == NULL, ,ENOMEM);
@@ -161,8 +162,9 @@ static int __init simple_init(void)
 //---------------------------------------------------------------
 static void __exit simple_cleanup(void)
 {
+  int i = 0;
   unregister_chrdev(MAJOR_NUM, DEVICE_NAME);
-  for (size_t i = 0; i < MAX_MINOR; i++)
+  for (i = 0; i < MAX_MINOR; i++)
   {
     kfree(msg_slots[i]);
   }
