@@ -12,7 +12,7 @@
 MODULE_LICENSE("GPL");
 
 // The msg_slot with minor number i has its data stored in msg_slots[i].
-static Msg_Slot* msg_slots;
+static Msg_Slot** msg_slots;
 
 //================== DEVICE FUNCTIONS ===========================
 static int device_open( struct inode* inode,
@@ -46,16 +46,16 @@ static ssize_t device_read( struct file* file,
   char checker;
 
   ERROR_CHECK(CHANNEL_INDX == ILLEGAL_INDX, , EINVAL)
-  ERROR_CHECK(msg_slots[MINOR_INDX].msgs_length[CHANNEL_INDX] == 0, , EWOULDBLOCK)
-  ERROR_CHECK(length < msg_slots[MINOR_INDX].msgs_length[CHANNEL_INDX], , ENOSPC)
+  ERROR_CHECK(msg_slots[MINOR_INDX]->msgs_length[CHANNEL_INDX] == 0, , EWOULDBLOCK)
+  ERROR_CHECK(length < msg_slots[MINOR_INDX]->msgs_length[CHANNEL_INDX], , ENOSPC)
 
   for(i = 0; i < length; i++)
   {
     ERROR_CHECK(get_user(checker, buffer + i),,EINVAL)
   }
 
-  for(i = 0; i < msg_slots[MINOR_INDX].msgs_length[CHANNEL_INDX]; i++)
-  ERROR_CHECK(put_user(msg_slots[MINOR_INDX].msgs[CHANNEL_INDX][i], buffer + i),, EINVAL)
+  for(i = 0; i < msg_slots[MINOR_INDX]->msgs_length[CHANNEL_INDX]; i++)
+  ERROR_CHECK(put_user(msg_slots[MINOR_INDX]->msgs[CHANNEL_INDX][i], buffer + i),, EINVAL)
     
   return i;
 }
@@ -80,11 +80,11 @@ static ssize_t device_write( struct file*       file,
     ERROR_CHECK(get_user(checker, buffer + i),,EINVAL)
   }
 
-  msg_slots[MINOR_INDX].msgs_length[CHANNEL_INDX] = length;
+  msg_slots[MINOR_INDX]->msgs_length[CHANNEL_INDX] = length;
 
   for(i = 0; i < length; i++)
   {
-    ERROR_CHECK(get_user(msg_slots[MINOR_INDX].msgs[CHANNEL_INDX][i], buffer + i),,EINVAL)
+    ERROR_CHECK(get_user(msg_slots[MINOR_INDX]->msgs[CHANNEL_INDX][i], buffer + i),,EINVAL)
   }
 
   return i;
@@ -103,9 +103,9 @@ static long device_ioctl( struct   file* file,
   ERROR_CHECK(ioctl_command_id != MSG_SLOT_CHANNEL || !ioctl_param, ,EINVAL)
 
 
-  for (i = 0; (i < MAX_MINOR) && (msg_slots[MINOR_INDX].channels[i] != ioctl_param); i++)
+  for (i = 0; (i < MAX_MINOR) && (msg_slots[MINOR_INDX]->channels[i] != ioctl_param); i++)
   {
-    if((min == ILLEGAL_INDX) && (msg_slots[MINOR_INDX].channels[i] == FREE_CHANNEL))
+    if((min == ILLEGAL_INDX) && (msg_slots[MINOR_INDX]->channels[i] == FREE_CHANNEL))
     {
       min = i;
     }
@@ -115,7 +115,7 @@ static long device_ioctl( struct   file* file,
   if(i == MAX_MINOR)
   {
     CHANNEL_INDX = min;
-    msg_slots[MINOR_INDX].channels[min] = ioctl_param;
+    msg_slots[MINOR_INDX]->channels[min] = ioctl_param;
   }
   else
     CHANNEL_INDX = i;
@@ -141,9 +141,15 @@ static int __init simple_init(void)
 {
   int rc;
 
-  msg_slots = (Msg_Slot*) kmalloc(MAX_MINOR * sizeof(Msg_Slot), GFP_KERNEL);
+  msg_slots =  kmalloc(MAX_MINOR * sizeof(Msg_Slot*), GFP_KERNEL);
+  ERROR_CHECK(msg_slots == NULL, ,ENOMEM);
 
-  ERROR_CHECK(msg_slots == NULL,,ENOMEM);
+  for (size_t i = 0; i < MAX_MINOR; i++)
+  {
+    msg_slots[i] = kmalloc(sizeof(Msg_Slot));
+    ERROR_CHECK(msg_slots[i] == NULL, ,ENOMEM);
+  }
+  
 
   rc = register_chrdev(MAJOR_NUM, DEVICE_NAME, &Fops);
 
@@ -156,6 +162,10 @@ static int __init simple_init(void)
 static void __exit simple_cleanup(void)
 {
   unregister_chrdev(MAJOR_NUM, DEVICE_NAME);
+  for (size_t i = 0; i < MAX_MINOR; i++)
+  {
+    kfree(msg_slots[i]);
+  }
   kfree(msg_slots);
 }
 
