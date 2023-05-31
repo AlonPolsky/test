@@ -78,7 +78,7 @@ static int device_open(struct inode* inode,
                         struct file*  file )
 {
   // Here we fill file->private_data correctly.
-  ERROR_CHECK((file->private_data = (void*) kzalloc(sizeof(file_data), GFP_KERNEL)) == NULL,,ENOMEM)
+  ERROR_CHECK((file->private_data = (void*) kmalloc(sizeof(file_data), GFP_KERNEL)) == NULL,,ENOMEM)
 
   ((file_data*)(file->private_data))->minor = iminor(inode);
   ((file_data*)(file->private_data))->channel_num = FREE_CHANNEL;
