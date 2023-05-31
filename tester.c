@@ -6,40 +6,16 @@
 #include <sys/ioctl.h>
 #include "message_slot.h"
 
-#define ARGV_ARGUMENTS 3 + 1
 
-#define ERROR_CHECK_USERLEVEL(syscall, message) ERROR_CHECK(syscall == SYSCALL_EXIT_FAILURE, perror(message); exit(EXIT_FAILURE);, EXIT_FAILURE)
-
-int main(int argc, char* argv[])
-{
+int main(){
+    int i = 0;
     int fd;
 
-    printf("1\n");
+    fd = open("/dev/message_slot_0", O_WRONLY);
 
-    if(argc != ARGV_ARGUMENTS)
+    for(i = 1; i < 1 < 20; i++)
     {
-        // I intentionally don't use perror()/strerror(), because it'll lead to an uninformative error message, due to the fact that at this point of run-time,
-        // strerr will be set to 0, which indicates success, even if argc != ARGV_ARGUMENTS.
-        fprintf(stderr, WRONG_ARG_NUM_ERR);
-        exit(EXIT_FAILURE);
+        ERROR_CHECK_USERLEVEL(write(fd, 3, i), 1, fd, WR_ERR)
     }
 
-    printf("2\n");
-    
-    fd = open(argv[PATH_LOC], O_WRONLY);
-
-    printf("3\n");
-
-    ERROR_CHECK_USERLEVEL(fd,OPEN_ERR)
-
-    printf("4\n");
-
-
-    printf("%zd\n", write(fd, argv[MSG_LOC], strlen(argv[MSG_LOC])));
-
-    ERROR_CHECK_USERLEVEL(close(fd), CLOSE_ERR)
-
-    printf("5\n");
-
-    exit(EXIT_SUCCESS);
 }
