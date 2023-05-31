@@ -27,7 +27,6 @@ int main(int argc, char* argv[])
 
     ERROR_CHECK_USERLEVEL(fd, 0, 0, OPEN_ERR)
 
-    ERROR_CHECK_USERLEVEL(ioctl(fd, MSG_SLOT_CHANNEL, 2), 1, fd, IOCTL_ERR)
 
     ERROR_CHECK_USERLEVEL((len = read(fd, buf, 4)), 1, fd, RD_ERR)
 
