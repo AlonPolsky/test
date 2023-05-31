@@ -20,7 +20,7 @@ static Msg_Slots* msg_slots;
 channel* channel_init(file_data* context)
 {
   channel* chan = NULL;
-  chan = (channel*) kzalloz(sizeof(channel), GFP_KERNEL);
+  chan = (channel*) kzalloc(sizeof(channel), GFP_KERNEL);
   // Checking for failed allocation.
   ERROR_CHECK(chan == NULL,,NULL)
   chan->minor = context->minor;
@@ -72,7 +72,7 @@ static int device_open(struct inode* inode,
                         struct file*  file )
 {
   // Here we fill file->private_data correctly.
-  ERROR_CHECK((file->private_data = (void*) kzalloz(sizeof(file_data), GFP_KERNEL)) == NULL,,ENOMEM)
+  ERROR_CHECK((file->private_data = (void*) kzalloc(sizeof(file_data), GFP_KERNEL)) == NULL,,ENOMEM)
 
   ((file_data*)(file->private_data))->minor = iminor(inode);
   ((file_data*)(file->private_data))->channel = FREE_CHANNEL;
