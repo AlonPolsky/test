@@ -22,7 +22,8 @@ channel* channel_init(file_data* context)
   channel* chan = NULL;
   chan = (channel*) kzalloc(sizeof(channel), GFP_KERNEL);
   // Checking for failed allocation.
-  ERROR_CHECK(chan == NULL,,NULL)
+  if(chan == NULL)
+    return NULL
   chan->minor = context->minor;
   chan->num = context->channel_num;
   return chan;
