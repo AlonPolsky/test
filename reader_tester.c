@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
     int fd;
     char buf[BUF_LEN];
     size_t len;
-    unsigned int a = 7l
+    unsigned int a = 7l;
 
     if(argc != ARGV_ARGUMENTS)
     {
