@@ -1,4 +1,4 @@
-// The reason this file may look close to the way it looked in other submissions is that I, and probably others, based this file on the code shown in recitation 6.
+// The reason this file may look close to the way it looked in other submissions is that I, and probably others, based this code on the code shown in recitation 6.
 
 #undef __KERNEL__
 #define __KERNEL__
@@ -131,7 +131,7 @@ static ssize_t device_read( struct file* file,
 //---------------------------------------------------------------
 
 static ssize_t device_write( struct file*       file,
-                             const char __user* buffer,
+                             const void __user* buffer,
                              size_t             length,
                              loff_t*            offset)
 {
