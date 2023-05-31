@@ -38,6 +38,7 @@ channel* find_channel(file_data* context, int write){
   channel* chan = NULL;
   if(context->prev_channel != NULL)
   {
+    printk(%d,41);
     return context->prev_channel;
   }
   
@@ -159,8 +160,6 @@ static ssize_t device_write( struct file*       file,
     // No direct access to user-space addresses in the kernel-level.
     ERROR_CHECK(get_user((chan->message)[i], buffer + i),,EINVAL)
   }
-
-  printk("%p", chan);
 
   return i;
 }
