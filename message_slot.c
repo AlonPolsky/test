@@ -117,8 +117,6 @@ static ssize_t device_read( struct file* file,
     // No direct access to user-space addresses in the kernel-level.
     ERROR_CHECK(put_user((chan->message)[i], buffer + i),, EINVAL)
   }
-
-  printk("%lu", chan->num);
     
   return i;
 }
@@ -162,8 +160,6 @@ static ssize_t device_write( struct file*       file,
     ERROR_CHECK(get_user((chan->message)[i], buffer + i),,EINVAL)
   }
 
-  printk("%lu", chan->num);
-
   return i;
 }
 
@@ -180,6 +176,8 @@ static long device_ioctl( struct   file* file,
   ERROR_CHECK(ioctl_command_id != MSG_SLOT_CHANNEL || !ioctl_param, ,EINVAL)
 
   context->channel_num = ioctl_param;
+
+  printk("%lu", context->channel_num);
     
   return SUCCESS;
 }
