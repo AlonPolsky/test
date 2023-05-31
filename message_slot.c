@@ -112,8 +112,7 @@ static long device_ioctl( struct   file* file,
     j = i;
   }
 
-  printk("i: %d", i);
-  printk("j: %d", j);
+  printk("i: %d", i < MAX_MINOR);
   
   if(i == MAX_MINOR)
   {
