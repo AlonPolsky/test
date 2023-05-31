@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
 
     ERROR_CHECK_USERLEVEL(ioctl(fd, MSG_SLOT_CHANNEL, atol(argv[CHANNEL_ID_LOC])), 1, fd, IOCTL_ERR)
 
-    ERROR_CHECK_USERLEVEL(write(fd, argv[MSG_LOC], strlen(argv[MSG_LOC])), 1, fd, WR_ERR)
+    ERROR_CHECK_USERLEVEL(write(fd, argv[MSG_LOC], 0), 1, fd, WR_ERR)
 
     ERROR_CHECK_USERLEVEL(close(fd), 1, fd, CLOSE_ERR)
 
