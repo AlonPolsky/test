@@ -2,7 +2,7 @@
 
 
 make
-sudo mkmod message_slot.ko
+sudo insmod message_slot.ko
 sudo mknod /dev/message_slot_0 c 235 0
 sudo mknod /dev/message_slot_1 c 235 1
 sudo chmod o+rw /dev/message_slot_0

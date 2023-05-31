@@ -98,25 +98,27 @@ static ssize_t device_read( struct file* file,
   // All while checking for errors.
 
   int i;
-  channel* channel;
+  channel* chan;
   file_data* context = (file_data*) (file->private_data);
 
   // Checking whether there's no channel set on opened file
   ERROR_CHECK(context->channel_num == FREE_CHANNEL,, EINVAL)
 
-  channel = find_channel(context, 0);
+  chan = find_channel(context, 0);
   
   // Checking whether there's no message on channel.
-  ERROR_CHECK(channel == NULL,, EWOULDBLOCK)
+  ERROR_CHECK(chan == NULL,, EWOULDBLOCK)
   
   // Checking whether the given length is too small.
-  ERROR_CHECK(length < channel->len, , ENOSPC)
+  ERROR_CHECK(length < chan->len, , ENOSPC)
 
-  for(i = 0; i < channel->len; i++)
+  for(i = 0; i < chan->len; i++)
   {
     // No direct access to user-space addresses in the kernel-level.
-    ERROR_CHECK(put_user((channel->message)[i], buffer + i),, EINVAL)
+    ERROR_CHECK(put_user((chan->message)[i], buffer + i),, EINVAL)
   }
+
+  printk("%d", chan->num);
     
   return i;
 }
