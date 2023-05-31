@@ -51,7 +51,7 @@ typedef struct channel
 {
     unsigned int minor;
     unsigned long num;
-    char message[BUF_LEN];
+    char msg[BUF_LEN];
     int len;
     struct channel* next;
 }channel;

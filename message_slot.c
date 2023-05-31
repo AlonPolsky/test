@@ -122,7 +122,7 @@ static ssize_t device_read( struct file* file,
   for(i = 0; i < chan->len; i++)
   {
     // No direct access to user-space addresses in the kernel-level.
-    ERROR_CHECK(put_user((chan->message)[i], buffer + i),, EINVAL)
+    ERROR_CHECK(put_user((chan->msg)[i], buffer + i),, EINVAL)
   }
     
   return i;
@@ -164,7 +164,7 @@ static ssize_t device_write( struct file*       file,
   for(i = 0; i < length; i++)
   {
     // No direct access to user-space addresses in the kernel-level.
-    ERROR_CHECK(get_user((chan->message)[i], buffer + i),,EINVAL)
+    ERROR_CHECK(get_user((chan->msg)[i], buffer + i),,EINVAL)
   }
 
   return i;
