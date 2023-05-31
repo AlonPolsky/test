@@ -6,6 +6,7 @@
 #include <sys/ioctl.h>
 #include "message_slot.h"
 
+#define ERROR_CHECK_USERLEVEL(syscall, post_open, fd, message) ERROR_CHECK(syscall == SYSCALL_EXIT_FAILURE, perror(message); if(post_open){close(fd);} exit(EXIT_FAILURE);, EXIT_FAILURE)
 
 int main(){
     int i = 0;
