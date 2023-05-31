@@ -36,9 +36,10 @@ channel* find_channel(file_data* context, int write){
   // If write == 0 (device_read() called the function), it returns NULL.
   // In any case of failed allocation, the function returns NULL.
   channel* chan = NULL;
-  printk("first");
+  
   if(context->prev_channel != NULL)
   {
+    printk("first");
     return context->prev_channel;
   }
   
@@ -47,6 +48,7 @@ channel* find_channel(file_data* context, int write){
     if(write){
       msg_slots->head = channel_init(context);
     }
+    printk("first");
     return msg_slots->head;
   }
   
@@ -58,6 +60,7 @@ channel* find_channel(file_data* context, int write){
   }
   if(!((chan->minor != context->minor)  || (chan->minor != context->minor)))
   {
+    printk("third");
     return chan;
   }
   
@@ -65,6 +68,7 @@ channel* find_channel(file_data* context, int write){
   {
     chan->next = channel_init(context);
   }
+  printk("fournth");
   return chan->next;
 }
 
