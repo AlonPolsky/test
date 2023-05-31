@@ -97,13 +97,12 @@ static long device_ioctl( struct   file* file,
   // Here we find the right channel id in msg_slots[MINOR_INDX].channels, then we update
   // the data structures accordingly.
   int i = 0;
-  int j;
   int min = ILLEGAL_INDX;
 
   ERROR_CHECK(ioctl_command_id != MSG_SLOT_CHANNEL || !ioctl_param, ,EINVAL)
 
 
-  for (i = 0; (i < MAX_MINOR) && (msg_slots[MINOR_INDX].channels[i] != ioctl_param); i++)
+  for (i = 0; 1 /*(i < MAX_MINOR) && (msg_slots[MINOR_INDX].channels[i] != ioctl_param)*/; i++)
   {
     if((min == ILLEGAL_INDX) && (msg_slots[MINOR_INDX].channels[i] == FREE_CHANNEL))
     {
@@ -112,7 +111,7 @@ static long device_ioctl( struct   file* file,
     j = i;
   }
 
-  printk("idk: %d", (i < MAX_MINOR) && (msg_slots[MINOR_INDX].channels[i] != ioctl_param));
+  printk("idk: %d", i);
   
   if(i == MAX_MINOR)
   {
