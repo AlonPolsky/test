@@ -98,7 +98,6 @@ static ssize_t device_read( struct file* file,
   // All while checking for errors.
 
   int i;
-  char checker;
   channel* channel;
   file_data* context = (file_data*) (file->private_data);
 
@@ -199,7 +198,7 @@ static int __init simple_init(void)
   // Initialize the module - Register the character device
   int rc;
 
-  msg_slots = (Msg_Slots*) kmalloc(MAX_MINOR * sizeof(Msg_Slot), GFP_KERNEL);
+  msg_slots = (Msg_Slots*) kmalloc(MAX_MINOR * sizeof(Msg_Slots), GFP_KERNEL);
 
   // Checks for allocation fail.
   ERROR_CHECK(msg_slots == NULL,,ENOMEM);
