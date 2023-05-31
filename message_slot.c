@@ -19,7 +19,7 @@ static int device_open( struct inode* inode,
                         struct file*  file )
 {
     // Here we fill file->private_data correctly.
-    ERROR_CHECK((file->private_data = (void*) kmalloc(sizeof(file_data), GFP_KERNEL)) == NULL,,ENOMEM)
+    ERROR_CHECK((file->private_data = (void*) kzalloc(sizeof(file_data), GFP_KERNEL)) == NULL,,ENOMEM)
 
     MINOR_INDX = iminor(inode);
     CHANNEL_INDX = ILLEGAL_INDX;
@@ -142,12 +142,12 @@ static int __init simple_init(void)
   int i = 0;
   int rc;
 
-  msg_slots =  kmalloc(MAX_MINOR * sizeof(Msg_Slot*), GFP_KERNEL);
+  msg_slots =  kzalloc(MAX_MINOR * sizeof(Msg_Slot*), GFP_KERNEL);
   ERROR_CHECK(msg_slots == NULL, ,ENOMEM);
 
   for (i = 0; i < MAX_MINOR; i++)
   {
-    msg_slots[i] = kmalloc(sizeof(Msg_Slot), GFP_KERNEL);
+    msg_slots[i] = kzalloc(sizeof(Msg_Slot), GFP_KERNEL);
     ERROR_CHECK(msg_slots[i] == NULL, ,ENOMEM);
   }
   
