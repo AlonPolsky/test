@@ -187,6 +187,8 @@ static long device_ioctl( struct   file* file,
   ERROR_CHECK(ioctl_command_id != MSG_SLOT_CHANNEL || !ioctl_param, ,EINVAL)
 
   context->channel_num = ioctl_param;
+
+  context->prev_channel = NULL;
     
   return SUCCESS;
 }
