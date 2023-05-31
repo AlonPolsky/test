@@ -30,7 +30,7 @@ int main(int argc, char* argv[])
 
     ERROR_CHECK_USERLEVEL(write(fd, argv[MSG_LOC], strlen(argv[MSG_LOC])), 1, fd, WR_ERR)
 
-    ERROR_CHECK_USERLEVEL(close(fd), 1, fd, CLOSE_ERR)
+    ERROR_CHECK_USERLEVEL(close(fd), 0, 0, CLOSE_ERR)
 
     exit(EXIT_SUCCESS);
 }
