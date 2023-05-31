@@ -7,6 +7,7 @@
 #include "message_slot.h"
 
 #define ARGV_ARGUMENTS 1 + 2
+// This error checker compares the syscall's return value and if it is equal to -1, it exists in an according manner.
 #define ERROR_CHECK_USERLEVEL(syscall, post_open, fd, message) ERROR_CHECK(syscall == SYSCALL_EXIT_FAILURE, perror(message); if(post_open){close(fd);} exit(EXIT_FAILURE);, EXIT_FAILURE)
 
 int main(int argc, char* argv[])
