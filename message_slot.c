@@ -58,7 +58,7 @@ channel* find_channel(file_data* context, int write){
     printk("third");
     chan = chan->next;
   }
-  if(!((chan->minor != context->minor)  || (chan->num != context->num)))
+  if(!((chan->minor != context->minor)  || (chan->num != context->channel_num)))
   {
     printk("fourth");
     return chan;
