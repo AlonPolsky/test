@@ -108,7 +108,6 @@ static long device_ioctl( struct   file* file,
     {
       min = i;
     }
-    j = i;
   }
 
   printk("idk: %d", i);
