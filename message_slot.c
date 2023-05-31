@@ -25,7 +25,7 @@ static Msg_Slots* msg_slots;
 channel* channel_init(file_data* context)
 {
   channel* chan = NULL;
-  chan = (channel*) kalloc(sizeof(channel), GFP_KERNEL);
+  chan = (channel*) kmalloc(sizeof(channel), GFP_KERNEL);
   // Checking for failed allocation.
   if(chan == NULL)
     return NULL;
