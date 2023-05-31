@@ -73,7 +73,6 @@ channel* find_channel(file_data* context, int write){
   return chan->next;
 }
 
-//===============================================================
 
 //================== DEVICE FUNCTIONS ===========================
 static int device_open(struct inode* inode,
