@@ -23,7 +23,7 @@ channel* channel_init(file_data* context)
   chan = (channel*) kzalloc(sizeof(channel), GFP_KERNEL);
   // Checking for failed allocation.
   if(chan == NULL)
-    return NULL
+    return NULL;
   chan->minor = context->minor;
   chan->num = context->channel_num;
   return chan;
@@ -76,7 +76,7 @@ static int device_open(struct inode* inode,
   ERROR_CHECK((file->private_data = (void*) kzalloc(sizeof(file_data), GFP_KERNEL)) == NULL,,ENOMEM)
 
   ((file_data*)(file->private_data))->minor = iminor(inode);
-  ((file_data*)(file->private_data))->channel = FREE_CHANNEL;
+  ((file_data*)(file->private_data))->channel_num = FREE_CHANNEL;
 
   return SUCCESS;
 }
@@ -99,8 +99,7 @@ static ssize_t device_read( struct file* file,
 
   int i;
   char checker;
-  channel* channel;
-  file_data* context = (file_data*) (file_data->private_data);
+  file_data* context = (file_data*) (file->private_data);
 
   // Checking whether there's no channel set on opened file
   ERROR_CHECK(context->channel_num == FREE_CHANNEL,, EINVAL)
@@ -136,7 +135,7 @@ static ssize_t device_write( struct file*       file,
   int i;
   char checker;
   channel* channel;
-  file_data* context = (file_data*) (file_data->private_data);
+  file_data* context = (file_data*) (file->private_data);
 
   // Checking whether there's no channel set on opened file
   ERROR_CHECK(context->channel_num == FREE_CHANNEL, , EINVAL)
@@ -170,8 +169,8 @@ static long device_ioctl( struct   file* file,
                           long unsigned int ioctl_param )
 {
   // Here we update file->private_data according to input, all while checking and handalling errors.
-  int min = ILLEGAL_INDX;
-  file_data* context = (file_data*) (file_data->private_data);
+
+  file_data* context = (file_data*) (file->private_data);
 
   // Checking for wrong ioctl_command_id or wrong_ioctl_param.
   ERROR_CHECK(ioctl_command_id != MSG_SLOT_CHANNEL || !ioctl_param, ,EINVAL)
@@ -199,7 +198,7 @@ static int __init simple_init(void)
   // Initialize the module - Register the character device
   int rc;
 
-  msg_slots = (Msg_Slot*) kmalloc(MAX_MINOR * sizeof(Msg_Slot), GFP_KERNEL);
+  msg_slots = (Msg_Slots*) kmalloc(MAX_MINOR * sizeof(Msg_Slot), GFP_KERNEL);
 
   // Checks for allocation fail.
   ERROR_CHECK(msg_slots == NULL,,ENOMEM);
@@ -215,14 +214,16 @@ static int __init simple_init(void)
 static void __exit simple_cleanup(void)
 {
   // Unregisters the driver, destroies the msg_slots list on its way.
-  unregister_chrdev(MAJOR_NUM, DEVICE_NAME);
   channel* chan = msg_slots->head;
   channel* temp = NULL;
+  
+  unregister_chrdev(MAJOR_NUM, DEVICE_NAME);
+
   while(chan != NULL)
   {
-      temp = chan->next;
-      free(chan);
-      chan = temp;
+    temp = chan->next;
+    kfree(chan);
+    chan = temp;
   }
   kfree(msg_slots);
 }
