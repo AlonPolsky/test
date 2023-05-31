@@ -1,3 +1,4 @@
+// The reason this file may look close to the way it looked in other submissions is that I, and probably others, based this file on the code shown in recitation 6.
 
 #undef __KERNEL__
 #define __KERNEL__
