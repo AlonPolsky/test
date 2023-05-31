@@ -8,6 +8,8 @@
 #include <linux/uaccess.h>
 #include <linux/slab.h>
 
+MODULE_LICENSE("GPL");
+
 // The msg_slot with minor number i has its data stored in msg_slots[i].
 static Msg_Slot* msg_slots;
 
@@ -95,6 +97,7 @@ static long device_ioctl( struct   file* file,
   // Here we find the right channel id in msg_slots[MINOR_INDX].channels, then we update
   // the data structures accordingly.
   int i;
+  int j;
   int min = ILLEGAL_INDX;
 
   ERROR_CHECK(ioctl_command_id != MSG_SLOT_CHANNEL || !ioctl_param, ,EINVAL)
@@ -106,9 +109,11 @@ static long device_ioctl( struct   file* file,
     {
       min = i;
     }
+    j = i;
   }
 
   printk("i: %d", i);
+  printk("j: %d", j);
   
   if(i == MAX_MINOR)
   {
