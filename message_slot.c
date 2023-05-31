@@ -160,7 +160,7 @@ static ssize_t device_write( struct file*       file,
     ERROR_CHECK(get_user((chan->message)[i], buffer + i),,EINVAL)
   }
 
-  printk("%lu", chan->num);
+  printk("%p", chan);
 
   return i;
 }
