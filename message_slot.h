@@ -62,6 +62,7 @@ typedef struct Msg_Slots{
 }Msg_Slots;
 
 // This data structure stores the minor number of a struct file and the channel number it is currently set on.
+// prev_channel is a pointer to the previous channel that the message was used on, for performance.
 typedef struct file_data{
     unsigned int minor;
     long unsigned int channel_num;
