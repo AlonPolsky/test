@@ -209,7 +209,7 @@ static int __init simple_init(void)
   // Initialize the module - Register the character device
   int rc;
 
-  msg_slots = (Msg_Slots*) kmalloc(MAX_MINOR * sizeof(Msg_Slots), GFP_KERNEL);
+  msg_slots = (Msg_Slots*) kmalloc(sizeof(Msg_Slots), GFP_KERNEL);
 
   // Checks for allocation fail.
   ERROR_CHECK(msg_slots == NULL,,ENOMEM);
