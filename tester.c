@@ -16,8 +16,8 @@ int main(){
     fd = open("/dev/message_slot_0", O_WRONLY);
 
     ERROR_CHECK_USERLEVEL(ioctl(fd, MSG_SLOT_CHANNEL, 1), 1, fd, IOCTL_ERR)
-    ERROR_CHECK_USERLEVEL(write(fd, *idk, 3), 1, fd, WR_ERR)
-    ERROR_CHECK_USERLEVEL(read(fd, a, 1), 1, fd, RD_ERR)
+    ERROR_CHECK_USERLEVEL(write(fd, &(*idk), 3), 1, fd, WR_ERR)
+    ERROR_CHECK_USERLEVEL(read(fd, &a, 1), 1, fd, RD_ERR)
 
 
 
