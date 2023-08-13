@@ -17,7 +17,7 @@ int main(){
 
     ERROR_CHECK_USERLEVEL(ioctl(fd, MSG_SLOT_CHANNEL, 1), 1, fd, IOCTL_ERR)
     ERROR_CHECK_USERLEVEL(write(fd, &(*idk), 3), 1, fd, WR_ERR)
-    ERROR_CHECK_USERLEVEL(read(fd, &a, 3), 1, fd, RD_ERR)
+    ERROR_CHECK_USERLEVEL(read(fd, &a, 1), 1, fd, RD_ERR)
 
 
 
