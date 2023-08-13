@@ -16,8 +16,8 @@ int main(){
     fd = open("/dev/message_slot_0", O_WRONLY);
 
     printf("%d\n", ioctl(fd, MSG_SLOT_CHANNEL, 1));
-    printf("%d\n", write(fd, &(*idk), 3));
-    printf("%d\n", read(fd, &a, 3));
+    printf("%ld\n", write(fd, &(*idk), 3));
+    printf("%ld\n", read(fd, &a, 3));
 
 
 
