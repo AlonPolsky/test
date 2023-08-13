@@ -17,7 +17,7 @@ int main(){
 
     printf("%d\n", ioctl(fd, MSG_SLOT_CHANNEL, 1));
     printf("%ld\n", write(fd, &(*idk), 3));
-    printf("%ld\n", read(fd, &a, 3));
+    printf("%ld\n", write(fd, &(*idk), 3));
 
 
 
