@@ -13,11 +13,11 @@ int main(){
     char* idk = "idk";
     char a;
 
-    fd = open("/dev/message_slot_0", O_WRONLY);
+    fd = open("/dev/message_slot_0", O_RDWR);
 
-    printf("%d\n", ioctl(fd, MSG_SLOT_CHANNEL, 1));
-    printf("%ld\n", write(fd, &(*idk), 3));
-    printf("%ld\n", write(fd, &(*idk), 3));
+    ERROR_CHECK_USERLEVEL(ioctl(fd, MSG_SLOT_CHANNEL, 1), 1, fd, IOCTL_ERR)
+    ERROR_CHECK_USERLEVEL(write(fd, &(*idk), 3), 1, fd, WR_ERR)
+    ERROR_CHECK_USERLEVEL(read(fd, &a, 3), 1, fd, RD_ERR)
 
 
 
