@@ -50,7 +50,8 @@ channel* find_channel(file_data* context, int write){
   
   if(msg_slots->head == NULL)
   {
-    if(write){
+    if(write)
+    {
       msg_slots->head = channel_init(context);
     }
     return msg_slots->head;
