@@ -50,6 +50,5 @@ int main()
     else
     {
         sleep(5);
-        fprintf(stdout, "writen: %d\n", a);
     }
 }
